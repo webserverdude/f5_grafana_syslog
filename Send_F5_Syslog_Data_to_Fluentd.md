@@ -2,6 +2,8 @@
 
 This article shows how to collect syslog data into InfluxDB using Fluentd and build a Grafana dashboard
 
+![flow_fluentd](assets/flow_fluentd.png)
+
 ## Preface
 
 ### Installed versions

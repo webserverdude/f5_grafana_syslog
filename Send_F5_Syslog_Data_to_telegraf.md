@@ -1,6 +1,8 @@
-# Send F5 Syslog Data to Fluentd
+# Send F5 Syslog Data to Telegraf
 
 This article shows how to collect syslog data into InfluxDB using telegraf and build a Grafana dashboard
+
+![flow_telegraf](assets/flow_telegraf.png)
 
 ## Preface
 
