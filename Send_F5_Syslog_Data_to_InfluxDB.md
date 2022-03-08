@@ -189,14 +189,14 @@ Login to Grafana __http://localhost:3000__ with admin/admin.
 ### Add data source
 Go to __Configuration__ >> __Data Scources__, choose __Add data source__ and select __InfluxDB__, set your credentials and select __HTTP Method__ to be __POST__.
 
-![add_data_source](assets\Grafana-Add_data_source.png)
+![add_data_source](assets/Grafana-Add_data_source.png)
 
 ### Add Dashboard
 Go to __Dashboards__ >> __Browse__, choose __New Dashboard__.
 Create a dashboard of the type table with the following query:
 `SELECT message FROM "autogen"."system.local0.info"`
 
-![add_dashboard](assets\Grafana-Create_Dashboard.png)
+![add_dashboard](assets/Grafana-Create_Dashboard.png)
 
 ## Closing thoughts
 * The dashboard is not very useful, all relevant data is in the __message__ column. If possible this should be separated by the comma character into multiple columns. 
