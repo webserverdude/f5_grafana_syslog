@@ -1,15 +1,17 @@
-# Send F5 Syslog Data to InfluxDB
+# Send F5 Syslog Data to Fluentd
 
 This article shows how to collect syslog data into InfluxDB using Fluentd and build a Grafana dashboard
 
 ## Preface
 
-Versions:
+### Installed versions
 * Debian 11 bullseye
 * Grafana 8.4.3
 * InfluxDB 1.8.10
 * Fluentd (td-agent) 4.3.0
 * fluent-plugin-influxdb 2.0.0
+
+### Diagram
 
 ## Install prerequisites
 ```shell
@@ -25,7 +27,7 @@ root@grafana:~# apt update
 root@grafana:~# apt install grafana
 ```
 
-## Step 1: Install InfluxDB 1.x Open Source and Chronograf
+## Step 2: Install InfluxDB 1.x Open Source and Chronograf
 
 ### Install InfluxDB 1.x Open Source
 ```shell
@@ -40,7 +42,7 @@ root@grafana:~# wget https://dl.influxdata.com/chronograf/releases/chronograf_1.
 root@grafana:~# dpkg -i chronograf_1.9.3_amd64.deb
 ```
 
-## Step 2: Install Fluentd and the InfluxDB plugin
+## Step 3: Install Fluentd and the InfluxDB plugin
 
 ### Configure Fluentd prerequisites
 Please follow the [Pre-installation Guide](https://docs.fluentd.org/installation/before-install) to configure your OS properly.
@@ -56,7 +58,7 @@ root@grafana:~# curl -fsSL https://toolbelt.treasuredata.com/sh/install-debian-b
 td-agent-gem install fluent-plugin-influxdb
 ```
 
-##  Step 3: Create database
+##  Step 4: Create database
 Create a database called bigip. This is where we will be storing syslog data:
 ```shell
 root@grafana:~# curl -i -X POST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE bigip"
@@ -78,7 +80,7 @@ root@grafana:~# curl "http://localhost:8086/query?q=show+databases"
 {"results":[{"statement_id":0,"series":[{"name":"databases","columns":["name"],"values":[["_internal"],["bigip"]]}]}]}
 ```
 
-## Step 4: Configure /etc/td-agent/td-agent.conf
+## Step 5: Configure /etc/td-agent/td-agent.conf
 Configure /etc/td-agent/td-agent.conf as follows:
 ```text
 <source>
@@ -98,7 +100,7 @@ Configure /etc/td-agent/td-agent.conf as follows:
 
 Your syslog data should be flowing into InfluxDB every 10 seconds (this is configured by flush_interval).
 
-## Step 5: Configure remote logging on F5
+## Step 6: Configure remote logging on F5
 
 ### fluentd pool
 ```text
@@ -154,7 +156,7 @@ security log profile remote-protocol-inspection {
 }
 ```
 
-## Step 6: Confirm data is flowing in
+## Step 7: Confirm data is flowing in
 Verify with tcpdump on BIG-IP that the data is sent correctly to flunetd.
 ```bash
 [root@afm:Active:Standalone] config # tcpdump -nni 0.0 port 42185 -X
@@ -183,7 +185,7 @@ time                message
 1646662140000000000 23003146 "/Common/vs_10.100.155.145_http","/Common/remote-protocol-inspection","10.100.155.1","59991","NA","10.100.155.145","80","0","HTTP","/favicon.ico","GET /favicon.ico HTTP/1.1\r\nHost: 10.100.155.145\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0\r\nAccept: image/avif,image/webp,*/*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\nDNT: 1\r\nConnection: keep-alive\r\nReferer: http://10.100.155.145/\r\n\r\n","Mar 07 2022 15:09:00","HTTP protocol compliance failed","14111326559714855302","Host header contains IP address","BLOCK","F5","PSM","pgo_use x86_64 vadc TMM Version 16.1.2.1.0.0.10 ","afm.zerotrust.works","192.168.100.235","5","23003146"
 ```
 
-## Step 7: Create Grafana dashboards
+## Step 8: Create Grafana dashboards
 Login to Grafana __http://localhost:3000__ with admin/admin.
 
 ### Add data source
