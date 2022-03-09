@@ -1,6 +1,6 @@
 # Send F5 Syslog Data to Fluentd
 
-This article shows how to collect syslog data into InfluxDB using Fluentd and build a Grafana dashboard
+This article shows how to collect syslog data from BIG-IP AFM into InfluxDB using Fluentd and build a Grafana dashboard
 
 ![flow_fluentd](assets/flow_fluentd.png)
 
@@ -111,7 +111,7 @@ ltm pool pl_fluentd {
         10.100.153.48:42185 {
             address 10.100.153.48
             session monitor-enabled
-            state down
+            state up
         }
     }
     monitor gateway_icmp
@@ -189,6 +189,7 @@ time                message
 
 ## Step 8: Create Grafana dashboards
 Login to Grafana __http://localhost:3000__ with admin/admin.
+Change the default admin password.
 
 ### Add data source
 Go to __Configuration__ >> __Data Scources__, choose __Add data source__ and select __InfluxDB__, set your credentials and select __HTTP Method__ to be __POST__.
