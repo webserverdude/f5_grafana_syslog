@@ -1,6 +1,6 @@
 # Send F5 Syslog Data to Telegraf
 
-This article shows how to collect syslog data from BIG-IP AFM into InfluxDB using telegraf and build a Grafana dashboard
+This guide shows how to collect syslog data from BIG-IP AFM into InfluxDB using telegraf and build a Grafana dashboard
 
 ## Preface
 
@@ -11,14 +11,13 @@ This article shows how to collect syslog data from BIG-IP AFM into InfluxDB usin
 * InfluxDB 1.6.7~rc0-1+b5
 * telegraf 1.21.4-1
 
-This presumes that you check and enable all services with
+This guide presumes that you check and enable all services with
 ```shell
 root@rsyslog:~# systemctl enable influxdb.service
 root@rsyslog:~# systemctl start influxdb.service
 ```
 
 ### Diagram
-
 ![flow_telegraf](assets/flow_telegraf.png)
 
 ## Install prerequisites

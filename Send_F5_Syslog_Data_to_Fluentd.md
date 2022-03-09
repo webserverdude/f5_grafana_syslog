@@ -1,8 +1,6 @@
 # Send F5 Syslog Data to Fluentd
 
-This article shows how to collect syslog data from BIG-IP AFM into InfluxDB using Fluentd and build a Grafana dashboard
-
-![flow_fluentd](assets/flow_fluentd.png)
+This guide shows how to collect syslog data from BIG-IP AFM into InfluxDB using Fluentd and build a Grafana dashboard
 
 ## Preface
 
@@ -13,7 +11,14 @@ This article shows how to collect syslog data from BIG-IP AFM into InfluxDB usin
 * Fluentd (td-agent) 4.3.0
 * fluent-plugin-influxdb 2.0.0
 
+This guide presumes that you check and enable all services with
+```shell
+root@rsyslog:~# systemctl enable influxdb.service
+root@rsyslog:~# systemctl start influxdb.service
+```
+
 ### Diagram
+![flow_fluentd](assets/flow_fluentd.png)
 
 ## Install prerequisites
 ```shell
